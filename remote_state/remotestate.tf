@@ -68,7 +68,7 @@ resource "aws_s3_bucket_policy" "s3_logs_bucket_policy" {
   bucket = aws_s3_bucket.s3_logs_bucket.id
   policy = <<POLICY
 {
-    "Version": "2008-10-17",
+    "Version": "2012-10-17",
     "Statement": [
         {
             "Effect": "Deny",
@@ -131,7 +131,7 @@ resource "aws_s3_bucket_policy" "tfstate_bucket_policy" {
   bucket = aws_s3_bucket.tfstate_bucket.id
   policy = <<POLICY
 {
-    "Version": "2008-10-17",
+    "Version": "2012-10-17",
     "Statement": [
         {
             "Effect": "Deny",
