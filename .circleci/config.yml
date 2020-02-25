@@ -1,0 +1,99 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+
+defaults: &defaults
+    docker:
+      - image: circleci/python:3.6.1
+    working_directory: ~/project
+    environment:
+      TF_IN_AUTOMATION: true
+
+tf-install: &tf-install
+  run:
+    name: tf-install
+    command: |
+      wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip
+      sudo unzip terraform_0.12.20_linux_amd64.zip -d /usr/bin
+      rm terraform_0.12.20_linux_amd64.zip
+      terraform --version
+
+jobs:
+  terraform-init:
+    <<: *defaults
+    steps:
+      - checkout
+      - *tf-install
+      - run:
+          name: init
+          command: terraform init -input=false
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  terraform-plan:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - *tf-install
+      - run:
+         name: plan
+         command: terraform plan -out=plan.tfplan -input=false
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  terraform-apply-approval:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - *tf-install
+      - run:
+         name: apply
+         command: |
+           # Uncomment the line below to allow CircleCI to apply the Terraform
+           terraform apply -input=false -auto-approve plan.tfplan
+           echo Uncomment line 61 of config.yml to let CircleCI apply the Terraform
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  scan:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+         name: scan-env
+         command: |
+           set -e
+           bash ./scan.sh
+         
+workflows:
+   version: 2
+   install-and-check-env:
+     jobs:
+        - terraform-init:
+           filters:
+             branches:
+               only: master
+        - terraform-plan:
+           requires:
+             - terraform-init
+        - hold-for-approval:
+           type: approval
+           requires:
+             - terraform-plan
+        - terraform-apply-approval:
+           requires:
+             - hold-for-approval
+        - scan:
+           requires:
+             - terraform-apply-approval
