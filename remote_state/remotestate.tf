@@ -190,6 +190,11 @@ POLICY
   }
 }
 
+resource "aws_kms_alias" "tfstate_key_alias" {
+  name = "alias/tfstate-key"
+  target_key_id = aws_kms_key.tfstate_key.key_id
+}
+
 ##############################
 ##### Tf State DDB Table #####
 ##############################
