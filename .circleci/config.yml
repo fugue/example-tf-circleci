@@ -58,7 +58,7 @@ jobs:
          name: apply
          command: |
            # Uncomment the line below to allow CircleCI to apply the Terraform
-           terraform apply -input=false -auto-approve plan.tfplan
+           # terraform apply -input=false -auto-approve plan.tfplan
            echo Uncomment line 61 of config.yml to let CircleCI apply the Terraform
       - persist_to_workspace:
           root: ~/project
