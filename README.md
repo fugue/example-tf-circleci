@@ -17,13 +17,15 @@ Implementing Fugue CI/CD with Terraform, GitHub, CircleCI, Part 1
 	- [Step 4a: Understand the pipeline](#step-4a-understand-the-pipeline)
 		- [main.tf](#maintf)
 		- [.circleci/config.yml](#circleciconfigyml)
-		- [scan.sh](#scanshhttpsgithubcomfugueexample-tf-circleciblobmasterscansh)
+		- [scan.sh](#scansh)
 	- [Step 5: Watch the CI/CD magic!](#step-5-watch-the-cicd-magic)
 		- [Trigger workflow](#trigger-workflow)
 		- [Failed build](#failed-build)
 		- [Passing build](#passing-build)
 - [What's Next?](#whats-next)
 	- [Further reading](#further-reading)
+
+![Fugue + Terraform + GitHub + CircleCI = <3](docs/cicd-header-pic.png)
 
 [Fugue](https://fugue.co/product) allows you to easily and
 programmatically validate your cloud infrastructure for security and
