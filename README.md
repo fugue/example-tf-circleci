@@ -58,6 +58,8 @@ to the front of the CI/CD pipeline. Regula validates resource
 configuration pre-deployment and Fugue ensures it stays compliant
 post-deployment.
 
+*Note:* For supplemental information to this walkthrough, including a Quick Start, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html).
+
 Getting Started
 ---------------
 
@@ -144,6 +146,8 @@ you need, you can simply [download the ZIP](https://github.com/fugue/example-tf-
 of our
 [example-tf-circleci](https://github.com/fugue/example-tf-circleci)
 repo and unzip the files into your own repo's directory.
+
+For a description of each file, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html#tf-circleci-list-files).
 
 ### Step 3: Set up Terraform backend
 
@@ -294,13 +298,11 @@ forward to configuring CircleCI.
 ### Step 4: Configure CircleCI
 
 We need to set up our project so CircleCI can start building it, so
-follow the [CircleCI
-docs](https://circleci.com/docs/2.0/config-intro/#part-one-hello-its-all-about-the-shell)
-to [add a new project](https://circleci.com/docs/2.0/hello-world/).
+follow the steps on the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html) to create a CircleCI project (or see the [CircleCI](https://circleci.com/docs/2.0/config-intro/#part-one-hello-its-all-about-the-shell) [docs](https://circleci.com/docs/2.0/hello-world/)).
 You'll need to [create an AWS IAM
 user](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)
 for CircleCI. For the purposes of this example, we've given CircleCI
-administrative access so it can deploy infrastructure into our account.
+administrative access so it can deploy infrastructure into our account. (To learn how we created the IAM user, see the [Fugue docs](https://docs.fugue.co/example-tf-circleci.html#how-to-create-the-circleci-iam-user).) 
 
 Next, we need to add the following environment variables:
 
@@ -396,6 +398,8 @@ jobs:
 
 -   [scan](https://github.com/fugue/example-tf-circleci/blob/master/.circleci/config.yml#L68): After the Terraform has been successfully applied, this job runs the [scan.sh](https://github.com/fugue/example-tf-circleci/blob/master/scan.sh) bash script, which uses the [Fugue API](https://docs.fugue.co/api.html) to kick off a scan of the specified Fugue environment. If any noncompliant resources are detected, the script ensures the build fails.
 
+For a line-by-line explanation of the CircleCI config, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html#tf-circleci-config-yml).
+
 #### scan.sh
 
 The [scan script](https://github.com/fugue/example-tf-circleci/blob/master/scan.sh) first uses the Fugue API to kick off a scan of the Fugue
@@ -432,6 +436,8 @@ Then, the following happens:
 2.  Do not update the baseline.
 
 3.  Fail the workflow.
+
+For a line-by-line explanation of the scan script, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html#tf-circleci-scan-sh).
 
 We've discussed in depth what the pipeline does, so it's finally time to
 see it in action!
