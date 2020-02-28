@@ -58,7 +58,7 @@ to the front of the CI/CD pipeline. Regula validates resource
 configuration pre-deployment and Fugue ensures it stays compliant
 post-deployment.
 
-*Note:* For supplemental information to this walkthrough, including a Quick Start, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html).
+*Note:* For supplemental information to this walkthrough, including an abbreviated [Quick Start](https://docs.fugue.co/example-tf-circleci.html#tf-circleci-quick-start) and line-by-line code documentation, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html).
 
 Getting Started
 ---------------
