@@ -231,7 +231,7 @@ Generate a Terraform plan:
 terraform plan
 ```
 
-You should see output describing 9 resources to be created. If
+You should see output describing 10 resources to be created. If
 everything looks good, go ahead and deploy the resources:
 
 ```bash
