@@ -545,10 +545,6 @@ infrastructure with security in mind.
 
 ### Further reading
 
-Don't forget to visit the
-[example-tf-circleci](https://github.com/fugue/example-tf-circleci)
-repo, which contains all of the code in this example.
-
 If you'd like to sign up for a free Enterprise trial, or a free-forever
 Developer account, [register here](https://riskmanager.fugue.co/register).
 
