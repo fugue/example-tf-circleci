@@ -536,7 +536,7 @@ out of compliance, follow the [rule remediation steps](https://docs.fugue.co/rem
 What's Next?
 ------------
 
-Coming soon -- we'll show you how to achieve end-to-end compliance and
+[In part 2](https://github.com/fugue/example-tf-circleci-part-2), we'll show you how to achieve end-to-end compliance and
 security by adding [Regula](https://github.com/fugue/regula), a
 pre-deployment compliance assessment tool, to this very pipeline.
 
