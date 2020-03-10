@@ -52,7 +52,7 @@ When implemented, the pipeline looks like this:
     2.  If any resources are noncompliant, the build fails
 6.  Fugue sets a new baseline to facilitate tracking drift
 
-In part 2 (coming soon!), we'll demonstrate end-to-end compliance by
+In [part two](https://github.com/fugue/example-tf-circleci-part-2), we'll demonstrate end-to-end compliance by
 adding our open source tool [Regula](https://github.com/fugue/regula)
 to the front of the CI/CD pipeline. Regula validates resource
 configuration pre-deployment and Fugue ensures it stays compliant
