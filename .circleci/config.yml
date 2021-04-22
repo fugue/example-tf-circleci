@@ -73,6 +73,9 @@ jobs:
       - run:
          name: scan-env
          command: |
+           wget -O fugue https://github.com/fugue/fugue-client/releases/download/v0.13.1/fugue-linux-amd64
+           chmod +x fugue
+           sudo mv fugue /usr/local/bin
            set -e
            bash ./scan.sh
          
