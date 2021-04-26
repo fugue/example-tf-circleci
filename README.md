@@ -1,6 +1,8 @@
 Implementing Fugue CI/CD with Terraform, GitHub, CircleCI, Part 1
 =================================================================
 
+**NOTE:** A previous version of this example used the environment variables `FUGUE_CLIENT_ID` and `FUGUE_CLIENT_SECRET`, which have been deprecated. The updated example uses the Fugue CLI, which requires the environment variables `FUGUE_API_ID` and `FUGUE_API_SECRET`. To preserve backwards compatibility, these variables will be set to the values of `FUGUE_CLIENT_ID` and `FUGUE_CLIENT_SECRET` if detected.
+
 - [Getting Started](#getting-started)
 - [Steps](#steps)
 	- [Step 1: Create Fugue environment](#step-1-create-fugue-environment)
@@ -310,9 +312,9 @@ Next, we need to add the following environment variables:
 
 -   `AWS_SECRET_ACCESS_KEY`
 
--   `FUGUE_CLIENT_ID`
+-   `FUGUE_API_ID` (note: `FUGUE_CLIENT_ID` is deprecated)
 
--   `FUGUE_CLIENT_SECRET`
+-   `FUGUE_API_SECRET` (note: `FUGUE_CLIENT_SECRET` is deprecated)
 
 -   `FUGUE_ENV_ID`
 
@@ -346,9 +348,9 @@ secret once. (If do you lose the secret, you can [revoke it and create a new one
 Back in CircleCI, copy the client ID and secret into the following new
 environment variables:
 
--   `FUGUE_CLIENT_ID`
+-   `FUGUE_API_ID` (note: `FUGUE_CLIENT_ID` is deprecated)
 
--   `FUGUE_CLIENT_SECRET`
+-   `FUGUE_API_SECRET` (note: `FUGUE_CLIENT_SECRET` is deprecated)
 
 #### Specify Fugue environment
 
@@ -396,17 +398,14 @@ jobs:
 
 -   [terraform-apply-approval](https://github.com/fugue/example-tf-circleci/blob/master/.circleci/config.yml#L51): This job is where the Terraform infrastructure as code becomes real infrastructure -- with `terraform apply`.
 
--   [scan](https://github.com/fugue/example-tf-circleci/blob/master/.circleci/config.yml#L68): After the Terraform has been successfully applied, this job runs the [scan.sh](https://github.com/fugue/example-tf-circleci/blob/master/scan.sh) bash script, which uses the [Fugue API](https://docs.fugue.co/api.html) to kick off a scan of the specified Fugue environment. If any noncompliant resources are detected, the script ensures the build fails.
+-   [scan](https://github.com/fugue/example-tf-circleci/blob/master/.circleci/config.yml#L68): After the Terraform has been successfully applied, this job runs the [scan.sh](https://github.com/fugue/example-tf-circleci/blob/master/scan.sh) bash script, which uses the [Fugue CLI](https://docs.fugue.co/cli.html) to kick off a scan of the specified Fugue environment. If any noncompliant resources are detected, the script ensures the build fails.
 
 For a line-by-line explanation of the CircleCI config, see the [Fugue docs site](https://docs.fugue.co/example-tf-circleci.html#tf-circleci-config-yml).
 
 #### scan.sh
 
-The [scan script](https://github.com/fugue/example-tf-circleci/blob/master/scan.sh) first uses the Fugue API to kick off a scan of the Fugue
+The [scan script](https://github.com/fugue/example-tf-circleci/blob/master/scan.sh) first uses the Fugue CLI to kick off a scan of the Fugue
 environment specified in the `FUGUE_ENV_ID` environment variable.
-
-Next, every 15 seconds, CircleCI uses the Fugue API to check the status
-of the scan. If it's still in progress, it keeps checking.
 
 When the scan is no longer in progress, the scan results are saved to
 `scan_results.json`.
