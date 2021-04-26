@@ -1,21 +1,16 @@
 #!/bin/sh
 
-# Check for CLI env vars; print note about deprecated env vars
+# Check for deprecated env vars and use them if present, but print note
+if [ ! -z "$FUGUE_CLIENT_ID" ] || [ ! -z "$FUGUE_CLIENT_SECRET" ]; then
+   printf "\nFUGUE_CLIENT_ID and FUGUE_CLIENT_SECRET are deprecated and will be removed in a future release. Please use FUGUE_API_ID and FUGUE_API_SECRET instead.\n"
+   export FUGUE_API_ID=$FUGUE_CLIENT_ID
+   export FUGUE_API_SECRET=$FUGUE_CLIENT_SECRET
+fi
+
+# If required credentials are not detected, print error and exit
 if [ -z "$FUGUE_API_ID" ] || [ -z "$FUGUE_API_SECRET" ]; then
-   printf "\nFUGUE_CLIENT_ID and FUGUE_CLIENT_SECRET are deprecated. Please use FUGUE_API_ID and FUGUE_API_SECRET instead.\n"
-
-# If only deprecated env vars exist, use them
-   if [ ! -z "$FUGUE_CLIENT_ID" ] && [ ! -z "$FUGUE_CLIENT_SECRET" ]; then
-      export FUGUE_API_ID=$FUGUE_CLIENT_ID
-      export FUGUE_API_SECRET=$FUGUE_CLIENT_SECRET
-      printf "\nDetected FUGUE_CLIENT_ID and FUGUE_CLIENT_SECRET. Setting FUGUE_API_ID and FUGUE_API_SECRET to those values.\n"
-
-# If none detected, print error and exit
-   else
-      printf "\nError: No credentials detected. Please set the FUGUE_API_ID and FUGUE_API_SECRET credentials.\n"
-      exit 1
-   fi
-
+   printf "\nError: No credentials detected. Please set the FUGUE_API_ID and FUGUE_API_SECRET credentials.\n"
+   exit 1
 fi
 
 echo "Initiating Fugue scan..."
